@@ -1,10 +1,15 @@
 package com.amineaharkate.job_api.job.impl;
 
+import com.amineaharkate.job_api.job.DYOs.jobWithcompanyDTO;
 import com.amineaharkate.job_api.job.Job;
 import com.amineaharkate.job_api.job.JobRebository;
+import com.amineaharkate.job_api.job.external.company;
 import com.amineaharkate.job_api.job.jobService;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
+import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -19,8 +24,23 @@ public class jobServiceImpl implements jobService {
     }
 
     @Override
-    public List<Job> findAll() {
-        return jobRebository.findAll();
+    public List<jobWithcompanyDTO> findAll() {
+        List<Job> jobs = jobRebository.findAll();
+        List<jobWithcompanyDTO> jobWithcompanyDTOList = new ArrayList<>();
+        for (Job job : jobs)
+        {
+            jobWithcompanyDTO obj = new jobWithcompanyDTO();
+            obj.setJob(job);
+            RestTemplate restTemplate = new RestTemplate();
+            company company = restTemplate.getForObject("http://localhost:5082/Companies/"+job.getCompanyId(), company.class);
+            obj.setConpany(company);
+            jobWithcompanyDTOList.add(obj);
+
+
+        }
+
+
+        return jobWithcompanyDTOList;
     }
 
     @Override

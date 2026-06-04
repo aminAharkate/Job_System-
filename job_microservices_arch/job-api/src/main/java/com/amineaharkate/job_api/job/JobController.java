@@ -1,5 +1,6 @@
 package com.amineaharkate.job_api.job;
 
+import com.amineaharkate.job_api.job.DYOs.jobWithcompanyDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,9 +20,10 @@ public class JobController {
 
     //@GetMapping("/Jobs")
     @GetMapping
-    public ResponseEntity<List<Job>> findAll() {
+    public ResponseEntity<List<jobWithcompanyDTO>> findAll() {
         return ResponseEntity.ok(jobService.findAll());
     }
+
     //@PostMapping("/Jobs")
     @PostMapping
     public String addJob(@RequestBody Job job)
