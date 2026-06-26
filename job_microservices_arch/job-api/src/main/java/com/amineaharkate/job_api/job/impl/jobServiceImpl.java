@@ -5,6 +5,7 @@ import com.amineaharkate.job_api.job.Job;
 import com.amineaharkate.job_api.job.JobRebository;
 import com.amineaharkate.job_api.job.external.company;
 import com.amineaharkate.job_api.job.jobService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -21,6 +22,9 @@ public class jobServiceImpl implements jobService {
 
     private JobRebository jobRebository;
 
+    @Autowired
+    RestTemplate restTemplate;
+
     public jobServiceImpl(JobRebository jobRebository) {
         this.jobRebository = jobRebository;
     }
@@ -33,9 +37,10 @@ public class jobServiceImpl implements jobService {
         {
             jobWithcompanyDTO obj = new jobWithcompanyDTO();
             obj.setJob(job);
-            RestTemplate restTemplate = new RestTemplate();
-            company company = restTemplate.getForObject("http://localhost:5082/Companies/"+job.getCompanyId(), company.class);
-            obj.setConpany(company);
+            //RestTemplate restTemplate = new RestTemplate();
+           // company company = restTemplate.getForObject("http://localhost:5082/Companies/"+job.getCompanyId(), company.class);
+            company company = restTemplate.getForObject("http://company-api:5082/Companies/"+job.getCompanyId(), company.class);
+            obj.setCompany(company);
             jobWithcompanyDTOList.add(obj);
 
 

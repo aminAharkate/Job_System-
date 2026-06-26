@@ -15,11 +15,11 @@ public class jobWithcompanyDTO {
         this.job = job;
     }
 
-    public company getConpany() {
+    public company getCompany() {
         return company;
     }
 
-    public void setConpany(company conpany) {
+    public void setCompany(company conpany) {
         this.company = conpany;
     }
 }
