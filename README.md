@@ -85,7 +85,7 @@ eureka.client.fetch-registry=true
 
 ---
 
-## 3. API Gateway Implementation
+### 3. API Gateway Implementation
 
 ### Spring Cloud Gateway Configuration
 ## Gateway Configuration
@@ -126,10 +126,10 @@ public class GatewayConfig {
 
 ---
 
-## 4. Centralized Configuration Management
+### 4. Centralized Configuration Management
 
-### Config Server Setup
-## Config Server Application
+## Config Server Setup
+# Config Server Application
 
 ```java
 @SpringBootApplication
@@ -171,10 +171,10 @@ config-repo/
 spring.application.name=job-service
 spring.config.import=optional:configserver:http://localhost:8888
 
-## 5. Distributed Tracing with Zipkin
+### 5. Distributed Tracing with Zipkin
 
-### Implementation
-## Micrometer Tracing Dependencies
+## Implementation
+# Micrometer Tracing Dependencies
 
 ```xml
 <!-- Micrometer Tracing Dependencies -->
@@ -192,7 +192,7 @@ management.tracing.enabled=true
 management.tracing.sampling.probability=1.0
 management.zipkin.tracing.endpoint=http://localhost:9411/api/v2/spans
 
-## Tracing Flow
+# Tracing Flow
 
 - Gateway receives request → Creates Trace ID  
 - Each service call → Creates Span with parent Trace ID  
@@ -201,9 +201,9 @@ management.zipkin.tracing.endpoint=http://localhost:9411/api/v2/spans
 
 ---
 
-## 6. Resilience Engineering with Resilience4j
+### 6. Resilience Engineering with Resilience4j
 
-### Circuit Breaker Implementation
+## Circuit Breaker Implementation
 
 ```java
 @Service
@@ -254,9 +254,9 @@ resilience4j.ratelimiter.instances.companyService.limit-for-period=10
 resilience4j.ratelimiter.instances.companyService.limit-refresh-period=1s
 resilience4j.ratelimiter.instances.companyService.timeout-duration=500ms
 
-## 7. Asynchronous Communication with RabbitMQ
+### 7. Asynchronous Communication with RabbitMQ
 
-### Producer Implementation (Review Service)
+## Producer Implementation (Review Service)
 ```java
 @Component
 public class ReviewEventPublisher {
@@ -285,7 +285,7 @@ public class ReviewEventPublisher {
     }
 }
 
-### Consumer Implementation (Company Service):
+## Consumer Implementation (Company Service):
 
 ```java
 @Component
@@ -314,7 +314,7 @@ public class ReviewEventConsumer {
         companyService.updateCompanyRating(event.getCompanyId(), newRating);
     }
 }
-### RabbitMQ Configuration:
+## RabbitMQ Configuration:
 ```java
 @Configuration
 public class RabbitMQConfig {
@@ -350,8 +350,8 @@ public class RabbitMQConfig {
         return new Jackson2JsonMessageConverter();
     }
 }
-## 8. Docker Containerization
-### Dockerfile Template:
+### 8. Docker Containerization
+## Dockerfile Template:
 
 # Build stage
 FROM maven:3.8.4-openjdk-17-slim AS build
@@ -449,8 +449,8 @@ services:
 volumes:
   postgres_data:
 
-##  9. Kubernetes Orchestration
-### Service Configuration (K8s):
+###  9. Kubernetes Orchestration
+## Service Configuration (K8s):
 
 apiVersion: v1
 kind: Service
@@ -575,8 +575,8 @@ spec:
           requests:
             storage: 5Gi
 
-## 10. Database Configuration & ORM
-### Entity Modeling:
+### 10. Database Configuration & ORM
+## Entity Modeling:
 ```java
 
 @Entity
@@ -626,8 +626,8 @@ public interface JobRepository extends JpaRepository<Job, Long> {
     List<Job> findByMinSalaryBetween(Double min, Double max);
     Page<Job> findAll(Pageable pageable);
 }
-## 11. REST API Design
-### Controller Implementation:
+### 11. REST API Design
+## Controller Implementation:
 @RestController
 @RequestMapping("/api/jobs")
 @Slf4j
@@ -669,8 +669,8 @@ public class JobController {
         return ResponseEntity.noContent().build();
     }
 }
-## 12. Testing Strategy
-### Unit Testing:
+### 12. Testing Strategy
+## Unit Testing:
 @SpringBootTest
 @AutoConfigureMockMvc
 public class JobControllerTest {
@@ -696,7 +696,7 @@ public class JobControllerTest {
             .andExpect(jsonPath("$[0].title").value("Developer"));
     }
 }
-## Integration Testing:
+### Integration Testing:
 @SpringBootTest
 @AutoConfigureTestDatabase
 public class JobRepositoryTest {
@@ -721,8 +721,8 @@ public class JobRepositoryTest {
     }
 }
 
-## Development & Deployment Process
-### Local Development:
+### Development & Deployment Process
+## Local Development:
 # Build all services
 mvn clean package
 
