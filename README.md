@@ -868,7 +868,7 @@ minikube service gateway
 
 ---
 
-## 🚀 Future Enhancements
+##  Future Enhancements
 ### GraphQL Implementation
 - Single endpoint for complex data queries  
 - Reduced over-fetching and under-fetching  
